@@ -5,8 +5,8 @@ words = ["python", "programación", "computadora", "código", "desarrollo", "int
 # Elegir una palabra al azar
 secret_word = random.choice(words)
 
-# Número máximo de intentos permitidos
-max_attempts = 10
+# Número máximo de fallos permitidos (numero de fallos permitidos = tamaño de la palabra secreta)
+max_failures = len (secret_word)
 
 # Lista para almacenar las letras adivinadas
 guessed_letters = []
@@ -19,7 +19,10 @@ word_displayed = "_" * len(secret_word)
 # Mostrarla palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
-for i in range(max_attempts):
+# inicializo la cantidad de fallos en 0
+failures = 0
+
+while failures < max_failures:
     # Pedir al jugador que ingrese una letra
     letter = input("Ingresa una letra: ").lower()
 
@@ -36,6 +39,8 @@ for i in range(max_attempts):
         print("¡Bien hecho! La letra está en la palabra.")
     else:
         print("Lo siento, la letra no está en la palabra.")
+        failures = failures + 1
+        print (f"Llevas {failures} fallos de {max_failures} permitidos !")
 
     # Mostrar la palabra parcialmente adivinada
     letters = []
@@ -52,8 +57,9 @@ for i in range(max_attempts):
         print(f"¡Felicidades! Has adivinado la palabra secreta: {secret_word}")
         break
 else:
-    print(f"¡Oh no! Has agotado tus {max_attempts} intentos.")
+    print(f"¡Oh no! Has agotado tus {max_failures} fallos permitidos.")
     print(f"La palabra secreta era: {secret_word}")
+
 
 # Nota: Por cada funcionalidad agregada se debe realizar al menos un commit que identifique
 # el cambio.
