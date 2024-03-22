@@ -1,6 +1,23 @@
 import random
 # Lista de palabras posibles
-words = ["python", "programación", "computadora", "código", "desarrollo", "inteligencia"]
+words = ["python", "programacion", "computadora", "código", "desarrollo", "inteligencia"]
+
+# Funcion para mostrar palabra en pantalla
+def show_word (word, difficulty):
+    if difficulty == "facil":
+        # Mostrar todas las vocales de la palabra secreta
+        vowels = ['a', 'e', 'i', 'o', 'u']
+        word_displayed = ""
+        for letter in secret_word:
+            if letter in vowels:
+                word_displayed += letter
+            else:
+                word_displayed += "_"
+        return word_displayed
+    elif difficulty == "media":
+        return word[0] + "-" * (len(word) - 2) + word[len(word) - 1]   # muestro la primer y ultima letra de la palabra
+    elif difficulty == "dificil":
+        return "-" * len (word)      # no muestro ninguna letra de la palabra
 
 # Elegir una palabra al azar
 secret_word = random.choice(words)
@@ -12,15 +29,28 @@ max_failures = len (secret_word)
 guessed_letters = []
 
 print("¡Bienvenido al juego de adivinanzas!")
+
+#Pedir al jugador que seleccione la dificultad del juego
+print ("Seleccione la dificultad del juego: ")
+difficulty = input ("Facil / Media / Dificil:  ")
+
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
 
-word_displayed = "_" * len(secret_word)
+# Llamo a la funcion para mostrar la palabra en pantalla segun la dificultad
+word_displayed = show_word (secret_word, difficulty)
 
 # Mostrarla palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
 # inicializo la cantidad de fallos en 0
 failures = 0
+
+if difficulty == "facil":
+    guessed_letters = ['a', 'e', 'i', 'o', 'u']
+
+if difficulty == "media":
+    guessed_letters.append (secret_word[0])
+    guessed_letters.append (secret_word[-1])
 
 while failures < max_failures:
     # Pedir al jugador que ingrese una letra
@@ -60,6 +90,6 @@ else:
     print(f"¡Oh no! Has agotado tus {max_failures} fallos permitidos.")
     print(f"La palabra secreta era: {secret_word}")
 
-
 # Nota: Por cada funcionalidad agregada se debe realizar al menos un commit que identifique
 # el cambio.
+   
